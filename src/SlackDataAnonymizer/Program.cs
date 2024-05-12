@@ -1,4 +1,8 @@
-﻿using SlackDataAnonymizer.Repositories;
+﻿using Cocona;
+using Microsoft.Extensions.DependencyInjection;
+using SlackDataAnonymizer.Abstractions.Service;
+using SlackDataAnonymizer.Models.Slack;
+using SlackDataAnonymizer.Repositories;
 using SlackDataAnonymizer.Services;
 using SlackDataAnonymizer.Services.Anonymizers;
 using System.Text.Json;
@@ -34,3 +38,16 @@ var messagesService = new MessagesService(
     messageAnonymizerService);
 
 await messagesService.AnonymizeMessagesAsync(CancellationToken.None);
+
+var builder = CoconaApp.CreateBuilder();
+builder.Services.AddSingleton<IAnonymizerService<string>, TextAnonymizerService>();
+builder.Services.AddSingleton<IAnonymizerService<Element>, ElementsAnonymizerService>();
+builder.Services.AddSingleton<IAnonymizerService<Reply>, RepliesAnonymizerService>();
+builder.Services.AddSingleton<IAnonymizerService<Reaction>, ReactionsAnonymizerService>();
+builder.Services.AddSingleton<IAnonymizerService<Block>, BlocksAnonymizerService>();
+builder.Services.AddSingleton<IAnonymizerService<Attachment>, AttachmentsAnonymizerService>();
+builder.Services.AddSingleton<IAnonymizerService<SlackMessage>, MessageAnonymizerService>();
+
+var app = builder.Build();
+
+await app.RunAsync();
