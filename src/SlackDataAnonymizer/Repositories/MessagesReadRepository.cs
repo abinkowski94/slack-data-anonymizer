@@ -6,15 +6,15 @@ using System.Text.Json;
 namespace SlackDataAnonymizer.Repositories;
 
 public class MessagesReadRepository(
-    string messagesFilePath,
+    string messagesPath,
     JsonSerializerOptions? options = null) : IMessagesReadRepository
 {
-    private readonly string messagesFilePath = messagesFilePath;
+    private readonly string messagesPath = messagesPath;
     private readonly JsonSerializerOptions options = options ?? new();
 
     public async IAsyncEnumerable<SlackMessage> GetSlackMessagesAsync([EnumeratorCancellation] CancellationToken cancellationToken)
     {
-        await using var fileStream = new FileStream(messagesFilePath, FileMode.Open, FileAccess.Read);
+        await using var fileStream = new FileStream(messagesPath, FileMode.Open, FileAccess.Read);
 
         var messages = JsonSerializer
             .DeserializeAsyncEnumerable<SlackMessage>(fileStream, options, cancellationToken)
