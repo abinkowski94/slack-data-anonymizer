@@ -7,11 +7,15 @@ namespace SlackDataAnonymizer.Services.Anonymizers;
 public class MessageAnonymizerService(
     IAnonymizerService<string> textAnonymizer,
     IAnonymizerService<Reply> repliesAnonymizer,
-    IAnonymizerService<Reaction> reactionAnonymizer) : IAnonymizerService<SlackMessage>
+    IAnonymizerService<Reaction> reactionAnonymizer,
+    IAnonymizerService<Block> blocksAnonymizer,
+    IAnonymizerService<Attachment> attachmentAnonymizer) : IAnonymizerService<SlackMessage>
 {
     private readonly IAnonymizerService<string> textAnonymizer = textAnonymizer;
     private readonly IAnonymizerService<Reply> repliesAnonymizer = repliesAnonymizer;
     private readonly IAnonymizerService<Reaction> reactionAnonymizer = reactionAnonymizer;
+    private readonly IAnonymizerService<Block> blocksAnonymizer = blocksAnonymizer;
+    private readonly IAnonymizerService<Attachment> attachmentAnonymizer = attachmentAnonymizer;
 
     public SlackMessage? Anonymize(SlackMessage? value, ISensitiveData sensitiveData)
     {
@@ -24,10 +28,12 @@ public class MessageAnonymizerService(
         AnonymizeUserProfile(value);
         AnonymizeReplyUsers(value, sensitiveData);
         AnonymizeParentUserId(value, sensitiveData);
+        AnonymizeText(value, sensitiveData);
 
-        value.Text = textAnonymizer.Anonymize(value.Text, sensitiveData);
         repliesAnonymizer.Anonymize(value.Replies, sensitiveData);
         reactionAnonymizer.Anonymize(value.Reactions, sensitiveData);
+        blocksAnonymizer.Anonymize(value.Blocks, sensitiveData);
+        attachmentAnonymizer.Anonymize(value.Attachments, sensitiveData);
 
         return value;
     }
@@ -68,5 +74,10 @@ public class MessageAnonymizerService(
         }
 
         message.ParentUserId = sensitiveData.GetOrAddUser(message.ParentUserId);
+    }
+
+    private void AnonymizeText(SlackMessage value, ISensitiveData sensitiveData)
+    {
+        value.Text = textAnonymizer.Anonymize(value.Text, sensitiveData);
     }
 }
