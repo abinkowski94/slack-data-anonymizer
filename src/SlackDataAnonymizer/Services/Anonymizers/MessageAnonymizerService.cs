@@ -1,17 +1,18 @@
-﻿using SlackDataAnonymizer.Abstractions.Models;
+﻿using OneOf;
+using SlackDataAnonymizer.Abstractions.Models;
 using SlackDataAnonymizer.Abstractions.Service;
 using SlackDataAnonymizer.Models.Slack;
 
 namespace SlackDataAnonymizer.Services.Anonymizers;
 
 public class MessageAnonymizerService(
-    IAnonymizerService<string> textAnonymizer,
+    IAnonymizerService<OneOf<TextContainer?, string?>> textOneOfAnonymizer,
     IAnonymizerService<Reply> repliesAnonymizer,
     IAnonymizerService<Reaction> reactionAnonymizer,
     IAnonymizerService<Block> blocksAnonymizer,
-    IAnonymizerService<Attachment> attachmentAnonymizer) : IAnonymizerService<SlackMessage>
+    IAnonymizerService<Attachment> attachmentAnonymizer) : ISlackMessageAnonymizerService
 {
-    private readonly IAnonymizerService<string> textAnonymizer = textAnonymizer;
+    private readonly IAnonymizerService<OneOf<TextContainer?, string?>> textOneOfAnonymizer = textOneOfAnonymizer;
     private readonly IAnonymizerService<Reply> repliesAnonymizer = repliesAnonymizer;
     private readonly IAnonymizerService<Reaction> reactionAnonymizer = reactionAnonymizer;
     private readonly IAnonymizerService<Block> blocksAnonymizer = blocksAnonymizer;
@@ -78,6 +79,6 @@ public class MessageAnonymizerService(
 
     private void AnonymizeText(SlackMessage value, ISensitiveData sensitiveData)
     {
-        value.Text = textAnonymizer.Anonymize(value.Text, sensitiveData);
+        value.Text = textOneOfAnonymizer.Anonymize(value.Text, sensitiveData);
     }
 }

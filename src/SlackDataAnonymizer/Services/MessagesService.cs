@@ -1,5 +1,6 @@
 ﻿using SlackDataAnonymizer.Abstractions.Models;
-using SlackDataAnonymizer.Abstractions.Repositories;
+using SlackDataAnonymizer.Abstractions.Repositories.Read;
+using SlackDataAnonymizer.Abstractions.Repositories.Write;
 using SlackDataAnonymizer.Abstractions.Service;
 using SlackDataAnonymizer.Models.Maps;
 using SlackDataAnonymizer.Models.Slack;
@@ -11,13 +12,13 @@ public class MessagesService(
     IMessagesReadRepository readRepository,
     IMessagesWriteRepository writeRepository,
     ISensitiveDataWriteRepository sensitiveDataRepository,
-    IAnonymizerService<SlackMessage> anonymizerService) : IMessagesService
+    ISlackMessageAnonymizerService anonymizerService) : IMessagesService
 {
     private readonly IMessagesReadRepository readRepository = readRepository;
     private readonly IMessagesWriteRepository writeRepository = writeRepository;
     private readonly ISensitiveDataWriteRepository sensitiveDataRepository = sensitiveDataRepository;
 
-    private readonly IAnonymizerService<SlackMessage> anonymizerService = anonymizerService;
+    private readonly ISlackMessageAnonymizerService anonymizerService = anonymizerService;
 
     public async ValueTask AnonymizeMessagesAsync(CancellationToken cancellationToken)
     {

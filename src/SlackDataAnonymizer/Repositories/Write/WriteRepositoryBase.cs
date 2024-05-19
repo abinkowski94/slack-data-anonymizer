@@ -1,4 +1,4 @@
-﻿namespace SlackDataAnonymizer.Repositories;
+﻿namespace SlackDataAnonymizer.Repositories.Write;
 
 public class WriteRepositoryBase(string filePath)
 {

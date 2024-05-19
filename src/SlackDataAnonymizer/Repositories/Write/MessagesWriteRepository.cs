@@ -1,12 +1,12 @@
-﻿using SlackDataAnonymizer.Abstractions.Repositories;
+﻿using SlackDataAnonymizer.Abstractions.Repositories.Write;
 using SlackDataAnonymizer.Models.Slack;
 using System.Text.Json;
 
-namespace SlackDataAnonymizer.Repositories;
+namespace SlackDataAnonymizer.Repositories.Write;
 
 public class MessagesWriteRepository(
     string messagesFilePath,
-    JsonSerializerOptions? options = null) 
+    JsonSerializerOptions? options = null)
     : WriteRepositoryBase(messagesFilePath), IMessagesWriteRepository
 {
     private readonly JsonSerializerOptions options = options ?? new();

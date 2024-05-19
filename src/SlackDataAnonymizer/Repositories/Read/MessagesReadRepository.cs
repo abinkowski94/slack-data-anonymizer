@@ -1,9 +1,10 @@
-﻿using SlackDataAnonymizer.Abstractions.Repositories;
+﻿using SlackDataAnonymizer.Abstractions.Repositories.Read;
+using SlackDataAnonymizer.Exceptions;
 using SlackDataAnonymizer.Models.Slack;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 
-namespace SlackDataAnonymizer.Repositories;
+namespace SlackDataAnonymizer.Repositories.Read;
 
 public class MessagesReadRepository(
     string messagesPath,
@@ -20,14 +21,28 @@ public class MessagesReadRepository(
             .DeserializeAsyncEnumerable<SlackMessage>(fileStream, options, cancellationToken)
             .ConfigureAwait(false);
 
-        await foreach (var message in messages)
+        await using var enumerator = messages.GetAsyncEnumerator();
+
+        while (await TryGetNextAsync(enumerator))
         {
-            if (message is not null)
+            if (enumerator.Current is not null)
             {
-                yield return message;
+                yield return enumerator.Current;
             }
         }
 
         yield break;
+    }
+
+    private async Task<bool> TryGetNextAsync(ConfiguredCancelableAsyncEnumerable<SlackMessage?>.Enumerator enumerator)
+    {
+        try
+        {
+            return await enumerator.MoveNextAsync();
+        }
+        catch (Exception ex)
+        {
+            throw new FileReadingException(messagesPath, ex);
+        }
     }
 }

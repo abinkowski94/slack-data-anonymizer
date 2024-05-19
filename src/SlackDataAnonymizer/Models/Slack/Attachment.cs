@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using OneOf;
+using System.Text.Json.Serialization;
 
 namespace SlackDataAnonymizer.Models.Slack;
 
@@ -17,7 +18,7 @@ public class Attachment
     public string? Fallback { get; set; }
 
     [JsonPropertyName("text")]
-    public string? Text { get; set; }
+    public OneOf<TextContainer?, string?> Text { get; set; }
 
     [JsonPropertyName("title")]
     public string? Title { get; set; }

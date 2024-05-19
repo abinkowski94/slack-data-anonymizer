@@ -1,12 +1,18 @@
-﻿using SlackDataAnonymizer.Models.Enums;
+﻿using Cocona;
+using SlackDataAnonymizer.Models.Enums;
 
 namespace SlackDataAnonymizer.Commands;
 
-public class AnonymizeCommand
+public class AnonymizeCommand : ICommandParameterSet
 {
+    [Option]
     public required string SourceDirectory { get; init; }
 
-    public string? TargetDirectory { get; init; }
+    [HasDefaultValue]
+    [Option]
+    public string TargetDirectory { get; init; } = ".\\anonymized";
 
-    public AggregationMode AggregationMode { get; init; }
+    [HasDefaultValue]
+    [Option]
+    public AggregationMode AggregationMode { get; init; } = AggregationMode.Daily;
 }

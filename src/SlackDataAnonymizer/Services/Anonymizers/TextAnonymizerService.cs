@@ -27,7 +27,7 @@ public partial class TextAnonymizerService : IAnonymizerService<string>
             var userId = item.ValueSpan[2..^1].ToString();
             var anonymizedId = sensitiveData.GetOrAddUser(userId);
 
-            matchReplacements.Add(userId, anonymizedId);
+            matchReplacements[userId] = anonymizedId;
         }
 
         return matchReplacements.Aggregate(value, (current, replacement) => current.Replace(replacement.Key, replacement.Value));

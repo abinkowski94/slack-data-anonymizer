@@ -1,6 +1,6 @@
 ﻿using SlackDataAnonymizer.Abstractions.Models;
 
-namespace SlackDataAnonymizer.Abstractions.Repositories;
+namespace SlackDataAnonymizer.Abstractions.Repositories.Write;
 
 public interface ISensitiveDataWriteRepository
 {

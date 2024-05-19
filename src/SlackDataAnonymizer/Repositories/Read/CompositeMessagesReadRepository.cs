@@ -1,8 +1,8 @@
-﻿using SlackDataAnonymizer.Abstractions.Repositories;
+﻿using SlackDataAnonymizer.Abstractions.Repositories.Read;
 using SlackDataAnonymizer.Models.Slack;
 using System.Runtime.CompilerServices;
 
-namespace SlackDataAnonymizer.Repositories;
+namespace SlackDataAnonymizer.Repositories.Read;
 
 public class CompositeMessagesReadRepository(
     IEnumerable<IMessagesReadRepository> readRepositories) : IMessagesReadRepository

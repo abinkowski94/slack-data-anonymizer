@@ -1,12 +1,12 @@
 ﻿using SlackDataAnonymizer.Abstractions.Models;
-using SlackDataAnonymizer.Abstractions.Repositories;
+using SlackDataAnonymizer.Abstractions.Repositories.Write;
 using System.Text.Json;
 
-namespace SlackDataAnonymizer.Repositories;
+namespace SlackDataAnonymizer.Repositories.Write;
 
 public class SensitiveDataWriteRepository(
     string filePath,
-    JsonSerializerOptions? options = null) 
+    JsonSerializerOptions? options = null)
     : WriteRepositoryBase(filePath), ISensitiveDataWriteRepository
 {
     private readonly JsonSerializerOptions options = options ?? new();

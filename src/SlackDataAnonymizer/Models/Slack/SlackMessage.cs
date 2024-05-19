@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using OneOf;
+using System.Text.Json.Serialization;
 
 namespace SlackDataAnonymizer.Models.Slack;
 
@@ -14,7 +15,7 @@ public class SlackMessage
     public string? TimeStamp { get; set; }
 
     [JsonPropertyName("text")]
-    public string? Text { get; set; }
+    public OneOf<TextContainer?, string?> Text { get; set; }
 
     [JsonPropertyName("user_profile")]
     public UserProfile? UserProfile { get; set; }
