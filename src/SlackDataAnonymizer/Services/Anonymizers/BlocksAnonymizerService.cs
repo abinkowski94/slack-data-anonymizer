@@ -1,5 +1,6 @@
 ﻿using SlackDataAnonymizer.Abstractions.Models;
 using SlackDataAnonymizer.Abstractions.Service;
+using SlackDataAnonymizer.Commands;
 using SlackDataAnonymizer.Models.Slack;
 
 namespace SlackDataAnonymizer.Services.Anonymizers;
@@ -9,7 +10,7 @@ public class BlocksAnonymizerService(
 {
     private readonly IAnonymizerService<Element> elementsAnonymizer = elementsAnonymizer;
 
-    public Block? Anonymize(Block? value, ISensitiveData sensitiveData)
+    public Block? Anonymize(Block? value, AnonymizeDataCommand command, ISensitiveData sensitiveData)
     {
         if (value is null)
         {
@@ -23,7 +24,7 @@ public class BlocksAnonymizerService(
 
         foreach (var element in value.Elements)
         {
-            elementsAnonymizer.Anonymize(element, sensitiveData);
+            elementsAnonymizer.Anonymize(element, command, sensitiveData);
         }
 
         return value;

@@ -12,7 +12,12 @@ public interface ISensitiveData
     [JsonPropertyName("user_details")]
     IReadOnlyDictionary<string, UserDetails> UserDetails { get; }
 
+    [JsonPropertyName("text_tags")]
+    IReadOnlyDictionary<string, string> TextTags { get; }
+
     string GetOrAddUser(string userId, UserProfile? userProfile = null);
     void UpdateUserProfileWithId(string userId, UserProfile? userProfile = null);
     void UpdateUserProfileWithAnonymizedId(string anonymizedUserId, UserProfile? userProfile = null);
+
+    string GetOrAddTag(string tag);
 }

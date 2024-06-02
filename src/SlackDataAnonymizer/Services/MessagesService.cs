@@ -2,6 +2,7 @@
 using SlackDataAnonymizer.Abstractions.Repositories.Read;
 using SlackDataAnonymizer.Abstractions.Repositories.Write;
 using SlackDataAnonymizer.Abstractions.Service;
+using SlackDataAnonymizer.Commands;
 using SlackDataAnonymizer.Models.Maps;
 using SlackDataAnonymizer.Models.Slack;
 using System.Runtime.CompilerServices;
@@ -20,16 +21,17 @@ public class MessagesService(
 
     private readonly ISlackMessageAnonymizerService anonymizerService = anonymizerService;
 
-    public async ValueTask AnonymizeMessagesAsync(CancellationToken cancellationToken)
+    public async ValueTask AnonymizeMessagesAsync(AnonymizeDataCommand command, CancellationToken cancellationToken)
     {
         var sensitiveData = new SensitiveData();
-        var messages = GetAnonymizedMessagesAsync(sensitiveData, cancellationToken);
+        var messages = GetAnonymizedMessagesAsync(command, sensitiveData, cancellationToken);
 
         await writeRepository.CreateSlackMessagesAsync(messages, cancellationToken).ConfigureAwait(false);
         await sensitiveDataRepository.CreateSensitiveDataAsync(sensitiveData, cancellationToken).ConfigureAwait(false);
     }
 
     private async IAsyncEnumerable<SlackMessage> GetAnonymizedMessagesAsync(
+        AnonymizeDataCommand command,
         ISensitiveData sensitiveData,
         [EnumeratorCancellation] CancellationToken cancellationToken)
     {
@@ -37,7 +39,7 @@ public class MessagesService(
 
         await foreach (var message in messages)
         {
-            anonymizerService.Anonymize(message, sensitiveData);
+            anonymizerService.Anonymize(message, command, sensitiveData);
 
             yield return message;
         }

@@ -2,7 +2,7 @@
   "profiles": {
     "Slack Data Anonymizer CLI - DEV": {
       "commandName": "Project",
-      "commandLineArgs": "anonymize --source-directory \"C:\\dev\\slack-data-anonymizer\\data\\tech_community\""
+      "commandLineArgs": "anonymize --source-directory \"C:\\dev\\slack-data-anonymizer\\data\\tech_community\" --aggregation-mode Yearly --text-tags zartis"
     }
   }
 }

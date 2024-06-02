@@ -1,6 +1,7 @@
 ﻿using OneOf;
 using SlackDataAnonymizer.Abstractions.Models;
 using SlackDataAnonymizer.Abstractions.Service;
+using SlackDataAnonymizer.Commands;
 using SlackDataAnonymizer.Models.Slack;
 
 namespace SlackDataAnonymizer.Services.Anonymizers;
@@ -10,7 +11,7 @@ public class ElementsAnonymizerService(
 {
     private readonly IAnonymizerService<OneOf<TextContainer?, string?>> textOneOfAnonymizer = textOneOfAnonymizer;
 
-    public Element? Anonymize(Element? value, ISensitiveData sensitiveData)
+    public Element? Anonymize(Element? value, AnonymizeDataCommand command,  ISensitiveData sensitiveData)
     {
         if (value is null)
         {
@@ -18,8 +19,8 @@ public class ElementsAnonymizerService(
         }
 
         AnonymizeUserId(value, sensitiveData);
-        AnonymizeText(value, sensitiveData);        
-        AnonymizeSubElements(value, sensitiveData);
+        AnonymizeText(value, command, sensitiveData);        
+        AnonymizeSubElements(value, command, sensitiveData);
 
         return value;
     }
@@ -34,12 +35,12 @@ public class ElementsAnonymizerService(
         value.UserId = sensitiveData.GetOrAddUser(value.UserId);
     }
 
-    private void AnonymizeText(Element value, ISensitiveData sensitiveData)
+    private void AnonymizeText(Element value, AnonymizeDataCommand command, ISensitiveData sensitiveData)
     {
-        value.Text = textOneOfAnonymizer.Anonymize(value.Text, sensitiveData);
+        value.Text = textOneOfAnonymizer.Anonymize(value.Text, command, sensitiveData);
     }
 
-    private void AnonymizeSubElements(Element value, ISensitiveData sensitiveData)
+    private void AnonymizeSubElements(Element value, AnonymizeDataCommand command, ISensitiveData sensitiveData)
     {
         if (value.Elements is null)
         {
@@ -48,7 +49,7 @@ public class ElementsAnonymizerService(
 
         foreach (var subElement in value.Elements)
         {
-            Anonymize(subElement, sensitiveData);
+            Anonymize(subElement, command, sensitiveData);
         }
     }
 }

@@ -10,7 +10,7 @@ public static class SerializationConsts
 
     static SerializationConsts()
     {
-        Options = new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
+        Options = new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull, WriteIndented = true };
         Options.Converters.Add(new OneOfTextContainerJsonConverter());
     }
 }

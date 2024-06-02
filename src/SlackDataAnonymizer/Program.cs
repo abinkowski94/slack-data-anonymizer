@@ -43,7 +43,9 @@ static CoconaAppBuilder AddFactories(CoconaAppBuilder builder)
 {
     builder.Services.AddSingleton(SerializationConsts.Options);
     builder.Services.AddSingleton<IMessagesReadRepositoryFactory, MessagesReadRepositoryFactory>();
+    builder.Services.AddSingleton<IMessagesWriteRepositoryFactory, MessagesWriteRepositoryFactory>();
     builder.Services.AddSingleton<ISensitiveDataWriteRepositoryFactory, SensitiveDataWriteRepositoryFactory>();
+    builder.Services.AddSingleton<IMessagesServiceFactory, MessagesServiceFactory>();
 
     return builder;
 }

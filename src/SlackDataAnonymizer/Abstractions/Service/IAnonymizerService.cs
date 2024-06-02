@@ -1,10 +1,11 @@
 ﻿using SlackDataAnonymizer.Abstractions.Models;
+using SlackDataAnonymizer.Commands;
 
 namespace SlackDataAnonymizer.Abstractions.Service;
 
 public interface IAnonymizerService<T>
 {
-    public IEnumerable<T?>? Anonymize(IEnumerable<T?>? values, ISensitiveData sensitiveData)
+    public IEnumerable<T?>? Anonymize(IEnumerable<T?>? values, AnonymizeDataCommand command, ISensitiveData sensitiveData)
     {
         if (values is null)
         {
@@ -13,11 +14,11 @@ public interface IAnonymizerService<T>
 
         foreach (var value in values)
         {
-            Anonymize(value, sensitiveData);
+            Anonymize(value, command, sensitiveData);
         }
 
         return values;
     }
 
-    T? Anonymize(T? value, ISensitiveData sensitiveData);
+    T? Anonymize(T? value, AnonymizeDataCommand command, ISensitiveData sensitiveData);
 }

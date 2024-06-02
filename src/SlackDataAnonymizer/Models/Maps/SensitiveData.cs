@@ -8,6 +8,7 @@ public class SensitiveData : ISensitiveData
 {
     private readonly Dictionary<string, string> userIds;
     private readonly Dictionary<string, UserDetails> userDetails;
+    private readonly Dictionary<string, string> textTags;
 
     [JsonPropertyName("user_ids")]
     public IReadOnlyDictionary<string, string> UserIds { get; }
@@ -15,22 +16,28 @@ public class SensitiveData : ISensitiveData
     [JsonPropertyName("user_details")]
     public IReadOnlyDictionary<string, UserDetails> UserDetails { get; }
 
-    public SensitiveData() :
-        this(
-            new Dictionary<string, string>(),
-            new Dictionary<string, UserDetails>())
+    [JsonPropertyName("text_tags")]
+    public IReadOnlyDictionary<string, string> TextTags { get; }
+
+    public SensitiveData() : this(
+        new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase),
+        new Dictionary<string, UserDetails>(),
+        new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase))
     {
     }
 
     public SensitiveData(
         IReadOnlyDictionary<string, string> userIds,
-        IReadOnlyDictionary<string, UserDetails> userDetails)
+        IReadOnlyDictionary<string, UserDetails> userDetails,
+        IReadOnlyDictionary<string, string> textTags)
     {
         this.userIds = userIds.ToDictionary(kv => kv.Key, kv => kv.Value);
         this.userDetails = userDetails.ToDictionary(kv => kv.Key, kv => kv.Value);
+        this.textTags = textTags.ToDictionary(kv => kv.Key, kv => kv.Value);
 
         UserIds = this.userIds.AsReadOnly();
         UserDetails = this.userDetails.AsReadOnly();
+        TextTags = this.textTags.AsReadOnly();
     }
 
     public string GetOrAddUser(string userId, UserProfile? userProfile = null)
@@ -74,6 +81,17 @@ public class SensitiveData : ISensitiveData
         {
             userDetails.Profile.MergeWith(userProfile);
         }
+    }
+
+    public string GetOrAddTag(string tag)
+    {
+        if (!textTags.TryGetValue(tag, out var result))
+        {
+            result = Guid.NewGuid().ToString("N");
+            textTags.Add(tag, result);
+        }
+
+        return result;
     }
 
     private UserDetails CreateUser(string userId, UserProfile? userProfile)

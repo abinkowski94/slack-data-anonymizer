@@ -1,12 +1,11 @@
 ﻿namespace SlackDataAnonymizer.Repositories.Write;
 
-public class WriteRepositoryBase(string filePath)
+public abstract class WriteRepositoryBase
 {
-    protected readonly string filePath = filePath;
-
-    protected void EnsuerDirectoryExists()
+    protected static void EnsuerDirectoryExists(string path)
     {
-        var directoryPath = Path.GetDirectoryName(filePath);
+        var directoryPath = Path.GetDirectoryName(path);
+
         if (!Directory.Exists(directoryPath) && !string.IsNullOrWhiteSpace(directoryPath))
         {
             Directory.CreateDirectory(directoryPath);

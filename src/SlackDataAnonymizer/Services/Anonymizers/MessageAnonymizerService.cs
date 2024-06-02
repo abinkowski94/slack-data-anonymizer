@@ -1,6 +1,7 @@
 ﻿using OneOf;
 using SlackDataAnonymizer.Abstractions.Models;
 using SlackDataAnonymizer.Abstractions.Service;
+using SlackDataAnonymizer.Commands;
 using SlackDataAnonymizer.Models.Slack;
 
 namespace SlackDataAnonymizer.Services.Anonymizers;
@@ -10,7 +11,8 @@ public class MessageAnonymizerService(
     IAnonymizerService<Reply> repliesAnonymizer,
     IAnonymizerService<Reaction> reactionAnonymizer,
     IAnonymizerService<Block> blocksAnonymizer,
-    IAnonymizerService<Attachment> attachmentAnonymizer) : ISlackMessageAnonymizerService
+    IAnonymizerService<Attachment> attachmentAnonymizer) 
+    : ISlackMessageAnonymizerService
 {
     private readonly IAnonymizerService<OneOf<TextContainer?, string?>> textOneOfAnonymizer = textOneOfAnonymizer;
     private readonly IAnonymizerService<Reply> repliesAnonymizer = repliesAnonymizer;
@@ -18,7 +20,7 @@ public class MessageAnonymizerService(
     private readonly IAnonymizerService<Block> blocksAnonymizer = blocksAnonymizer;
     private readonly IAnonymizerService<Attachment> attachmentAnonymizer = attachmentAnonymizer;
 
-    public SlackMessage? Anonymize(SlackMessage? value, ISensitiveData sensitiveData)
+    public SlackMessage? Anonymize(SlackMessage? value, AnonymizeDataCommand command, ISensitiveData sensitiveData)
     {
         if (value is null)
         {
@@ -29,12 +31,12 @@ public class MessageAnonymizerService(
         AnonymizeUserProfile(value);
         AnonymizeReplyUsers(value, sensitiveData);
         AnonymizeParentUserId(value, sensitiveData);
-        AnonymizeText(value, sensitiveData);
+        AnonymizeText(value, command, sensitiveData);
 
-        repliesAnonymizer.Anonymize(value.Replies, sensitiveData);
-        reactionAnonymizer.Anonymize(value.Reactions, sensitiveData);
-        blocksAnonymizer.Anonymize(value.Blocks, sensitiveData);
-        attachmentAnonymizer.Anonymize(value.Attachments, sensitiveData);
+        repliesAnonymizer.Anonymize(value.Replies, command, sensitiveData);
+        reactionAnonymizer.Anonymize(value.Reactions, command, sensitiveData);
+        blocksAnonymizer.Anonymize(value.Blocks, command, sensitiveData);
+        attachmentAnonymizer.Anonymize(value.Attachments, command, sensitiveData);
 
         return value;
     }
@@ -77,8 +79,8 @@ public class MessageAnonymizerService(
         message.ParentUserId = sensitiveData.GetOrAddUser(message.ParentUserId);
     }
 
-    private void AnonymizeText(SlackMessage value, ISensitiveData sensitiveData)
+    private void AnonymizeText(SlackMessage value, AnonymizeDataCommand command, ISensitiveData sensitiveData)
     {
-        value.Text = textOneOfAnonymizer.Anonymize(value.Text, sensitiveData);
+        value.Text = textOneOfAnonymizer.Anonymize(value.Text, command, sensitiveData);
     }
 }

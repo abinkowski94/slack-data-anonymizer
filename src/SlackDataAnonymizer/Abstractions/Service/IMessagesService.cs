@@ -1,6 +1,8 @@
-﻿namespace SlackDataAnonymizer.Abstractions.Service;
+﻿using SlackDataAnonymizer.Commands;
+
+namespace SlackDataAnonymizer.Abstractions.Service;
 
 public interface IMessagesService
 {
-    ValueTask AnonymizeMessagesAsync(CancellationToken cancellationToken);
+    ValueTask AnonymizeMessagesAsync(AnonymizeDataCommand command, CancellationToken cancellationToken);
 }

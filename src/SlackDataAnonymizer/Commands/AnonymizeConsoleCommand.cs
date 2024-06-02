@@ -3,7 +3,7 @@ using SlackDataAnonymizer.Models.Enums;
 
 namespace SlackDataAnonymizer.Commands;
 
-public class AnonymizeCommand : ICommandParameterSet
+public class AnonymizeConsoleCommand : ICommandParameterSet
 {
     [Option]
     public required string SourceDirectory { get; init; }
@@ -15,4 +15,8 @@ public class AnonymizeCommand : ICommandParameterSet
     [HasDefaultValue]
     [Option]
     public AggregationMode AggregationMode { get; init; } = AggregationMode.Daily;
+
+    [HasDefaultValue]
+    [Option]
+    public string[] TextTags { get; init; } = [];
 }

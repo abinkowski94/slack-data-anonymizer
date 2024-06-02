@@ -7,13 +7,14 @@ namespace SlackDataAnonymizer.Repositories.Write;
 public class SensitiveDataWriteRepository(
     string filePath,
     JsonSerializerOptions? options = null)
-    : WriteRepositoryBase(filePath), ISensitiveDataWriteRepository
+    : WriteRepositoryBase, ISensitiveDataWriteRepository
 {
+    private readonly string filePath = filePath;
     private readonly JsonSerializerOptions options = options ?? new();
 
     public async ValueTask CreateSensitiveDataAsync(ISensitiveData sensitiveData, CancellationToken cancellationToken)
     {
-        EnsuerDirectoryExists();
+        EnsuerDirectoryExists(filePath);
 
         await using var fileStream = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Write);
 
