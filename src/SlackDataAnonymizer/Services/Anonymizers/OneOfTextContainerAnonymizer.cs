@@ -8,7 +8,8 @@ namespace SlackDataAnonymizer.Services.Anonymizers;
 
 public class OneOfTextContainerAnonymizer(
     IAnonymizerService<TextContainer> textContainerAnonymizer,
-    IAnonymizerService<string> textAnonymizer) : IAnonymizerService<OneOf<TextContainer?, string?>>
+    IAnonymizerService<string> textAnonymizer)
+    : IAnonymizerService<OneOf<TextContainer?, string?>>
 {
     private readonly IAnonymizerService<TextContainer> textContainerAnonymizer = textContainerAnonymizer;
     private readonly IAnonymizerService<string> textAnonymizer = textAnonymizer;

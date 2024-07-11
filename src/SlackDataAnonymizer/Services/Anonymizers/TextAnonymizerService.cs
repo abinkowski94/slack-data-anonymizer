@@ -19,7 +19,7 @@ public partial class TextAnonymizerService : IAnonymizerService<string>
         }
 
         var result = AnonymizeUserIds(value, sensitiveData);
-        result = AnonymizeTextTags(value, command.TextTags, sensitiveData);
+        result = AnonymizeTextTags(result, command.TextTags, sensitiveData);
 
         return result;
     }

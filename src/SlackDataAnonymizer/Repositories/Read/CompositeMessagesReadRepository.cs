@@ -5,7 +5,8 @@ using System.Runtime.CompilerServices;
 namespace SlackDataAnonymizer.Repositories.Read;
 
 public class CompositeMessagesReadRepository(
-    IEnumerable<IMessagesReadRepository> readRepositories) : IMessagesReadRepository
+    IEnumerable<IMessagesReadRepository> readRepositories)
+    : IMessagesReadRepository
 {
     private readonly IEnumerable<IMessagesReadRepository> readRepositories = readRepositories;
 

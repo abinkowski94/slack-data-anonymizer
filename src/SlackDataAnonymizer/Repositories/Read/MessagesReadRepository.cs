@@ -8,13 +8,24 @@ namespace SlackDataAnonymizer.Repositories.Read;
 
 public class MessagesReadRepository(
     string messagesPath,
-    JsonSerializerOptions? options = null) : IMessagesReadRepository
+    JsonSerializerOptions? options = null)
+    : IMessagesReadRepository
 {
     private readonly string messagesPath = messagesPath;
     private readonly JsonSerializerOptions options = options ?? new();
 
     public async IAsyncEnumerable<SlackMessage> GetSlackMessagesAsync([EnumeratorCancellation] CancellationToken cancellationToken)
     {
+        if (!File.Exists(messagesPath))
+        {
+            throw new FileReadingException(messagesPath);
+        }
+
+        if (new FileInfo(messagesPath).Length == 0)
+        {
+            yield break;
+        }
+
         await using var fileStream = new FileStream(messagesPath, FileMode.Open, FileAccess.Read);
 
         var messages = JsonSerializer

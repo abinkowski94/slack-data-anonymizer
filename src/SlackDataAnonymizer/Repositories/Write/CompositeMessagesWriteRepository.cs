@@ -11,7 +11,8 @@ namespace SlackDataAnonymizer.Repositories.Write;
 public class CompositeMessagesWriteRepository(
     JsonSerializerOptions options,
     string targetDirectory,
-    AggregationMode aggregationMode) : IMessagesWriteRepository
+    AggregationMode aggregationMode)
+    : IMessagesWriteRepository
 {
     private readonly JsonSerializerOptions options = options;
     private readonly string targetDirectory = targetDirectory;
@@ -58,7 +59,7 @@ public class CompositeMessagesWriteRepository(
                 AggregationMode.Daily => $"{date:yyyy-MM-dd}.json",
                 AggregationMode.Monthly => $"{date:yyyy-MM}.json",
                 AggregationMode.Quarterly => $"{date:yyyy}-Q{date.GetYearQuarter()}.json",
-                AggregationMode.Semestraly => $"{date:yyyy}-S{date.GetYearQuarter()}.json",
+                AggregationMode.Semestraly => $"{date:yyyy}-S{date.GetYearSemester()}.json",
                 AggregationMode.Yearly => $"{date:yyyy}.json",
                 _ => throw new InvalidOperationException($"Aggregation mode {aggregationMode} is not supported."),
             };

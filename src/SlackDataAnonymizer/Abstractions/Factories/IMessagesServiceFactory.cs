@@ -1,8 +1,9 @@
-﻿using SlackDataAnonymizer.Commands;
-using SlackDataAnonymizer.Services;
+﻿using SlackDataAnonymizer.Abstractions.Service;
+using SlackDataAnonymizer.Commands;
 
 namespace SlackDataAnonymizer.Abstractions.Factories;
+
 public interface IMessagesServiceFactory
 {
-    MessagesService Create(AnonymizeConsoleCommand consoleCommand);
+    IMessagesService Create(AnonymizeConsoleCommand consoleCommand);
 }

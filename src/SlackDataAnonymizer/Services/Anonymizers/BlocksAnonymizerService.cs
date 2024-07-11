@@ -6,7 +6,8 @@ using SlackDataAnonymizer.Models.Slack;
 namespace SlackDataAnonymizer.Services.Anonymizers;
 
 public class BlocksAnonymizerService(
-    IAnonymizerService<Element> elementsAnonymizer) : IAnonymizerService<Block>
+    IAnonymizerService<Element> elementsAnonymizer)
+    : IAnonymizerService<Block>
 {
     private readonly IAnonymizerService<Element> elementsAnonymizer = elementsAnonymizer;
 

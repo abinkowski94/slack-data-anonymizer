@@ -13,7 +13,8 @@ public class MessagesService(
     IMessagesReadRepository readRepository,
     IMessagesWriteRepository writeRepository,
     ISensitiveDataWriteRepository sensitiveDataRepository,
-    ISlackMessageAnonymizerService anonymizerService) : IMessagesService
+    ISlackMessageAnonymizerService anonymizerService)
+    : IMessagesService
 {
     private readonly IMessagesReadRepository readRepository = readRepository;
     private readonly IMessagesWriteRepository writeRepository = writeRepository;

@@ -11,7 +11,7 @@ public class MessageAnonymizerService(
     IAnonymizerService<Reply> repliesAnonymizer,
     IAnonymizerService<Reaction> reactionAnonymizer,
     IAnonymizerService<Block> blocksAnonymizer,
-    IAnonymizerService<Attachment> attachmentAnonymizer) 
+    IAnonymizerService<Attachment> attachmentAnonymizer)
     : ISlackMessageAnonymizerService
 {
     private readonly IAnonymizerService<OneOf<TextContainer?, string?>> textOneOfAnonymizer = textOneOfAnonymizer;

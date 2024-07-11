@@ -17,7 +17,7 @@ public class MessagesServiceFactory(
     private readonly ISensitiveDataWriteRepositoryFactory sensitiveDataWriteRepositoryFactory = sensitiveDataWriteRepositoryFactory;
     private readonly ISlackMessageAnonymizerService anonymizerService = anonymizerService;
 
-    public MessagesService Create(AnonymizeConsoleCommand consoleCommand)
+    public IMessagesService Create(AnonymizeConsoleCommand consoleCommand)
     {
         var outputDirectoryPath = CreateOutputDirectoryPath(consoleCommand);
         var senstivieDataPath = CreateSensitiveDataPath(outputDirectoryPath);

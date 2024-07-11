@@ -7,11 +7,12 @@ using SlackDataAnonymizer.Models.Slack;
 namespace SlackDataAnonymizer.Services.Anonymizers;
 
 public class ElementsAnonymizerService(
-    IAnonymizerService<OneOf<TextContainer?, string?>> textOneOfAnonymizer) : IAnonymizerService<Element>
+    IAnonymizerService<OneOf<TextContainer?, string?>> textOneOfAnonymizer)
+    : IAnonymizerService<Element>
 {
     private readonly IAnonymizerService<OneOf<TextContainer?, string?>> textOneOfAnonymizer = textOneOfAnonymizer;
 
-    public Element? Anonymize(Element? value, AnonymizeDataCommand command,  ISensitiveData sensitiveData)
+    public Element? Anonymize(Element? value, AnonymizeDataCommand command, ISensitiveData sensitiveData)
     {
         if (value is null)
         {
@@ -19,7 +20,7 @@ public class ElementsAnonymizerService(
         }
 
         AnonymizeUserId(value, sensitiveData);
-        AnonymizeText(value, command, sensitiveData);        
+        AnonymizeText(value, command, sensitiveData);
         AnonymizeSubElements(value, command, sensitiveData);
 
         return value;

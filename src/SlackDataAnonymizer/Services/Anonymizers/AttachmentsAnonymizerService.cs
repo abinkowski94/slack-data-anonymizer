@@ -7,11 +7,12 @@ using SlackDataAnonymizer.Models.Slack;
 namespace SlackDataAnonymizer.Services.Anonymizers;
 
 public class AttachmentsAnonymizerService(
-    IAnonymizerService<OneOf<TextContainer?, string?>> textOneOfAnonymizer) : IAnonymizerService<Attachment>
+    IAnonymizerService<OneOf<TextContainer?, string?>> textOneOfAnonymizer)
+    : IAnonymizerService<Attachment>
 {
     private readonly IAnonymizerService<OneOf<TextContainer?, string?>> textOneOfAnonymizer = textOneOfAnonymizer;
 
-    public Attachment? Anonymize(Attachment? value, AnonymizeDataCommand command,  ISensitiveData sensitiveData)
+    public Attachment? Anonymize(Attachment? value, AnonymizeDataCommand command, ISensitiveData sensitiveData)
     {
         if (value is null)
         {
