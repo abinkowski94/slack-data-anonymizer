@@ -1,4 +1,5 @@
 ﻿using Moq;
+using SlackDataAnonymizer.Abstractions.Factories;
 using SlackDataAnonymizer.Abstractions.Models;
 using SlackDataAnonymizer.Abstractions.Repositories.Read;
 using SlackDataAnonymizer.Abstractions.Repositories.Write;
@@ -14,6 +15,7 @@ public class MessagesServiceTests
     private readonly Mock<IMessagesReadRepository> readRepositoryMock;
     private readonly Mock<IMessagesWriteRepository> writeRepositoryMock;
     private readonly Mock<ISensitiveDataWriteRepository> sensitiveDataRepositoryMock;
+    private readonly Mock<IAnonymousIdFactory> anonymousIdFactoryMock;
     private readonly Mock<ISlackMessageAnonymizerService> anonymizerServiceMock;
     private readonly MessagesService sut;
 
@@ -22,12 +24,14 @@ public class MessagesServiceTests
         readRepositoryMock = new();
         writeRepositoryMock = new();
         sensitiveDataRepositoryMock = new();
+        anonymousIdFactoryMock = new();
         anonymizerServiceMock = new();
 
         sut = new(
             readRepositoryMock.Object,
             writeRepositoryMock.Object,
             sensitiveDataRepositoryMock.Object,
+            anonymousIdFactoryMock.Object,
             anonymizerServiceMock.Object
         );
     }

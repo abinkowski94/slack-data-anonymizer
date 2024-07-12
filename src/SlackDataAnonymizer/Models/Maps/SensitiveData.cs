@@ -1,4 +1,6 @@
-﻿using SlackDataAnonymizer.Abstractions.Models;
+﻿using SlackDataAnonymizer.Abstractions.Factories;
+using SlackDataAnonymizer.Abstractions.Models;
+using SlackDataAnonymizer.Factories;
 using SlackDataAnonymizer.Models.Slack;
 using System.Text.Json.Serialization;
 
@@ -6,6 +8,8 @@ namespace SlackDataAnonymizer.Models.Maps;
 
 public class SensitiveData : ISensitiveData
 {
+    private readonly IAnonymousIdFactory anonymousIdFactory;
+
     private readonly Dictionary<string, string> userIds;
     private readonly Dictionary<string, UserDetails> userDetails;
     private readonly Dictionary<string, string> textTags;
@@ -19,17 +23,21 @@ public class SensitiveData : ISensitiveData
     [JsonPropertyName("text_tags")]
     public IReadOnlyDictionary<string, string> TextTags { get; }
 
-    public SensitiveData() : this(
-        new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase),
-        new Dictionary<string, UserDetails>(),
-        new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase))
+    public SensitiveData(
+        IAnonymousIdFactory? anonymousIdFactory = null) 
+        : this(
+              new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase),
+              new Dictionary<string, UserDetails>(),
+              new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase),
+              anonymousIdFactory)
     {
     }
 
     public SensitiveData(
         IReadOnlyDictionary<string, string> userIds,
         IReadOnlyDictionary<string, UserDetails> userDetails,
-        IReadOnlyDictionary<string, string> textTags)
+        IReadOnlyDictionary<string, string> textTags,
+        IAnonymousIdFactory? anonymousIdFactory = null)
     {
         this.userIds = userIds.ToDictionary(kv => kv.Key, kv => kv.Value);
         this.userDetails = userDetails.ToDictionary(kv => kv.Key, kv => kv.Value);
@@ -38,6 +46,8 @@ public class SensitiveData : ISensitiveData
         UserIds = this.userIds.AsReadOnly();
         UserDetails = this.userDetails.AsReadOnly();
         TextTags = this.textTags.AsReadOnly();
+
+        this.anonymousIdFactory = anonymousIdFactory ?? new AnonymousIdFactory();
     }
 
     public string GetOrAddUser(string userId, UserProfile? userProfile = null)
@@ -87,7 +97,7 @@ public class SensitiveData : ISensitiveData
     {
         if (!textTags.TryGetValue(tag, out var result))
         {
-            result = Guid.NewGuid().ToString("N");
+            result = anonymousIdFactory.GetId();
             textTags.Add(tag, result);
         }
 
@@ -96,7 +106,7 @@ public class SensitiveData : ISensitiveData
 
     private UserDetails CreateUser(string userId, UserProfile? userProfile)
     {
-        var anonymizedId = Guid.NewGuid().ToString("N");
+        var anonymizedId = anonymousIdFactory.GetId();
         var userDetails = new UserDetails { AnonymizedId = anonymizedId, UserId = userId, Profile = userProfile };
 
         userIds.Add(userId, anonymizedId);

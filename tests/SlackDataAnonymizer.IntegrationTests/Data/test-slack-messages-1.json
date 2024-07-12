@@ -1,0 +1,144 @@
+[
+  {
+    "user": "U123456",
+    "type": "message",
+    "ts": "1625214000.000100",
+    "text": {
+      "text": "Hello \"Testers\" team! This is our first message from <@U123456>.",
+      "type": "mrkdwn"
+    },
+    "user_profile": {
+      "first_name": "John",
+      "real_name": "John Doe",
+      "display_name": "john_doe",
+      "name": "johndoe"
+    },
+    "thread_ts": "1625214000.000100",
+    "reply_count": 2,
+    "reply_users_count": 2,
+    "latest_reply": "1625217600.000200",
+    "reply_users": [ "U654321", "U234567" ],
+    "replies": [
+      {
+        "user": "U654321",
+        "ts": "1625215800.000100"
+      },
+      {
+        "user": "U234567",
+        "ts": "1625217600.000200"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "section",
+        "block_id": "b1",
+        "elements": [
+          {
+            "type": "text",
+            "text": {
+              "text": "Welcome to the team!",
+              "type": "mrkdwn"
+            }
+          }
+        ]
+      }
+    ],
+    "reactions": [
+      {
+        "name": "thumbsup",
+        "users": [ "U123456", "U654321" ],
+        "count": 2
+      }
+    ],
+    "parent_user_id": null,
+    "attachments": [
+      {
+        "from_url": "https://example.com",
+        "id": 1,
+        "original_url": "https://example.com/original",
+        "fallback": "This is a fallback message",
+        "text": {
+          "text": "Check out this link",
+          "type": "plain_text"
+        },
+        "title": "Example Link",
+        "title_link": "https://example.com",
+        "fields": [
+          {
+            "title": "Priority",
+            "value": "High"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "user": "U234567",
+    "type": "message",
+    "ts": "1625290400.000200",
+    "text": {
+      "text": "Don't forget the meeting at 10 AM tomorrow. <@U123456>",
+      "type": "mrkdwn"
+    },
+    "user_profile": {
+      "first_name": "Jane",
+      "real_name": "Jane Smith",
+      "display_name": "jane_smith",
+      "name": "janesmith"
+    },
+    "thread_ts": "1625290400.000200",
+    "reply_count": 1,
+    "reply_users_count": 1,
+    "latest_reply": "1625294000.000300",
+    "reply_users": [ "U123456" ],
+    "replies": [
+      {
+        "user": "U123456",
+        "ts": "1625294000.000300"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "section",
+        "block_id": "b2",
+        "elements": [
+          {
+            "type": "text",
+            "text": {
+              "text": "Remember to join the meeting room.",
+              "type": "mrkdwn"
+            }
+          }
+        ]
+      }
+    ],
+    "reactions": [
+      {
+        "name": "reminder_ribbon",
+        "users": [ "U234567" ],
+        "count": 1
+      }
+    ],
+    "parent_user_id": null,
+    "attachments": [
+      {
+        "from_url": "https://example.com",
+        "id": 2,
+        "original_url": "https://example.com/original",
+        "fallback": "This is another fallback message",
+        "text": {
+          "text": "Join the meeting",
+          "type": "plain_text"
+        },
+        "title": "Meeting Link",
+        "title_link": "https://example.com/meeting",
+        "fields": [
+          {
+            "title": "Location",
+            "value": "Room 101"
+          }
+        ]
+      }
+    ]
+  }
+]

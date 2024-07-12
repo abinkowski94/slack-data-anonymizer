@@ -1,0 +1,48 @@
+﻿[
+  {
+    user: Guid_1,
+    type: message,
+    ts: 1577836800.000400,
+    text: {
+      type: mrkdwn,
+      text: Happy New Year 2020! Excited for the new decade!
+    },
+    thread_ts: 1577836800.000400,
+    reply_count: 1,
+    reply_users_count: 1,
+    latest_reply: 1577837800.000500,
+    reply_users: [
+      Guid_2
+    ],
+    replies: [
+      {
+        user: Guid_2,
+        ts: 1577837800.000500
+      }
+    ],
+    blocks: [
+      {
+        type: section,
+        block_id: b4,
+        elements: [
+          {
+            type: text,
+            text: {
+              type: mrkdwn,
+              text: New decade, new opportunities!
+            }
+          }
+        ]
+      }
+    ],
+    reactions: [
+      {
+        name: fireworks,
+        users: [
+          Guid_1
+        ],
+        count: 1
+      }
+    ]
+  }
+]

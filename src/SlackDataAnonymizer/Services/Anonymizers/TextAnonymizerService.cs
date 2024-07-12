@@ -1,16 +1,13 @@
 ﻿using SlackDataAnonymizer.Abstractions.Models;
 using SlackDataAnonymizer.Abstractions.Service;
 using SlackDataAnonymizer.Commands;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 
 namespace SlackDataAnonymizer.Services.Anonymizers;
 
 public partial class TextAnonymizerService : IAnonymizerService<string>
 {
-    [GeneratedRegex("<@.*?>", RegexOptions.Compiled)]
-    private static partial Regex UserIdPattern();
-    private static readonly Regex userIdPattern = UserIdPattern();
-
     public string? Anonymize(string? value, AnonymizeDataCommand command, ISensitiveData sensitiveData)
     {
         if (value is null)
@@ -26,7 +23,7 @@ public partial class TextAnonymizerService : IAnonymizerService<string>
 
     private static string AnonymizeUserIds(string value, ISensitiveData sensitiveData)
     {
-        var matchedValues = userIdPattern.Matches(value);
+        var matchedValues = Regexes.UserIdPattern.Matches(value);
         var matches = matchedValues.AsEnumerable().ToList();
 
         var matchReplacements = new Dictionary<string, string>();
@@ -44,7 +41,7 @@ public partial class TextAnonymizerService : IAnonymizerService<string>
 
     private static string AnonymizeTextTags(string value, IReadOnlyList<string> textTags, ISensitiveData sensitiveData)
     {
-        foreach(var textTag in textTags)
+        foreach (var textTag in textTags)
         {
             var anonymizedTag = sensitiveData.GetOrAddTag(textTag);
 
@@ -52,5 +49,14 @@ public partial class TextAnonymizerService : IAnonymizerService<string>
         }
 
         return value;
+    }
+
+    [ExcludeFromCodeCoverage]
+    private static partial class Regexes
+    {
+        [GeneratedRegex("<@.*?>", RegexOptions.Compiled)]
+        private static partial Regex GetUserIdPattern();
+
+        public static Regex UserIdPattern { get; } = GetUserIdPattern();
     }
 }

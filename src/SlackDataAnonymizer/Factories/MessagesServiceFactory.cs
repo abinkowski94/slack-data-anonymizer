@@ -9,12 +9,14 @@ public class MessagesServiceFactory(
     IMessagesReadRepositoryFactory readRepositoryFactory,
     IMessagesWriteRepositoryFactory writeRepositoryFactory,
     ISensitiveDataWriteRepositoryFactory sensitiveDataWriteRepositoryFactory,
+    IAnonymousIdFactory anonymousIdFactory,
     ISlackMessageAnonymizerService anonymizerService)
     : IMessagesServiceFactory
 {
     private readonly IMessagesReadRepositoryFactory readRepositoryFactory = readRepositoryFactory;
     private readonly IMessagesWriteRepositoryFactory writeRepositoryFactory = writeRepositoryFactory;
     private readonly ISensitiveDataWriteRepositoryFactory sensitiveDataWriteRepositoryFactory = sensitiveDataWriteRepositoryFactory;
+    private readonly IAnonymousIdFactory anonymousIdFactory = anonymousIdFactory;
     private readonly ISlackMessageAnonymizerService anonymizerService = anonymizerService;
 
     public IMessagesService Create(AnonymizeConsoleCommand consoleCommand)
@@ -30,6 +32,7 @@ public class MessagesServiceFactory(
             messagesReadRepository,
             messagesWriteRepository,
             sensitiveDataWriteRepository,
+            anonymousIdFactory,
             anonymizerService);
     }
 

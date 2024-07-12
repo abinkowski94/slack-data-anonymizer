@@ -1,0 +1,47 @@
+[
+  {
+    "user": "U345678",
+    "type": "message",
+    "ts": "1609459200.000300",
+    "text": {
+      "text": "Happy New Year everyone! Let's make 2021 amazing!",
+      "type": "mrkdwn"
+    },
+    "user_profile": {
+      "first_name": "Alice",
+      "real_name": "Alice Johnson",
+      "display_name": "alice_johnson",
+      "name": "alicejohnson"
+    },
+    "thread_ts": "1609459200.000300",
+    "reply_count": 0,
+    "reply_users_count": 0,
+    "latest_reply": null,
+    "reply_users": [],
+    "replies": [],
+    "blocks": [
+      {
+        "type": "section",
+        "block_id": "b3",
+        "elements": [
+          {
+            "type": "text",
+            "text": {
+              "text": "Wishing you all a prosperous new year!",
+              "type": "mrkdwn"
+            }
+          }
+        ]
+      }
+    ],
+    "reactions": [
+      {
+        "name": "tada",
+        "users": [ "U345678", "U234567" ],
+        "count": 2
+      }
+    ],
+    "parent_user_id": null,
+    "attachments": []
+  }
+]

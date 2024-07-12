@@ -1,0 +1,97 @@
+[
+  {
+    "user": "U456789",
+    "type": "message",
+    "ts": "1577836800.000400",
+    "text": {
+      "text": "Happy New Year 2020! Excited for the new decade!",
+      "type": "mrkdwn"
+    },
+    "user_profile": {
+      "first_name": "Bob",
+      "real_name": "Bob Brown",
+      "display_name": "bob_brown",
+      "name": "bobbrown"
+    },
+    "thread_ts": "1577836800.000400",
+    "reply_count": 1,
+    "reply_users_count": 1,
+    "latest_reply": "1577837800.000500",
+    "reply_users": [ "U567890" ],
+    "replies": [
+      {
+        "user": "U567890",
+        "ts": "1577837800.000500"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "section",
+        "block_id": "b4",
+        "elements": [
+          {
+            "type": "text",
+            "text": {
+              "text": "New decade, new opportunities!",
+              "type": "mrkdwn"
+            }
+          }
+        ]
+      }
+    ],
+    "reactions": [
+      {
+        "name": "fireworks",
+        "users": [ "U456789" ],
+        "count": 1
+      }
+    ],
+    "parent_user_id": null,
+    "attachments": []
+  },
+  {
+    "user": "U567890",
+    "type": "message",
+    "ts": "1546300800.000600",
+    "text": {
+      "text": "Happy New Year 2019! Looking forward to great achievements.",
+      "type": "mrkdwn"
+    },
+    "user_profile": {
+      "first_name": "Carol",
+      "real_name": "Carol White",
+      "display_name": "carol_white",
+      "name": "carolwhite"
+    },
+    "thread_ts": "1546300800.000600",
+    "reply_count": 0,
+    "reply_users_count": 0,
+    "latest_reply": null,
+    "reply_users": [],
+    "replies": [],
+    "blocks": [
+      {
+        "type": "section",
+        "block_id": "b5",
+        "elements": [
+          {
+            "type": "text",
+            "text": {
+              "text": "Cheers to a new year!",
+              "type": "mrkdwn"
+            }
+          }
+        ]
+      }
+    ],
+    "reactions": [
+      {
+        "name": "champagne",
+        "users": [ "U567890", "U456789" ],
+        "count": 2
+      }
+    ],
+    "parent_user_id": null,
+    "attachments": []
+  }
+]

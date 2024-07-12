@@ -1,0 +1,39 @@
+﻿[
+  {
+    user: Guid_1,
+    type: message,
+    ts: 1546300800.000600,
+    text: {
+      type: mrkdwn,
+      text: Happy New Year 2019! Looking forward to great achievements.
+    },
+    thread_ts: 1546300800.000600,
+    reply_count: 0,
+    reply_users_count: 0,
+    blocks: [
+      {
+        type: section,
+        block_id: b5,
+        elements: [
+          {
+            type: text,
+            text: {
+              type: mrkdwn,
+              text: Cheers to a new year!
+            }
+          }
+        ]
+      }
+    ],
+    reactions: [
+      {
+        name: champagne,
+        users: [
+          Guid_1,
+          Guid_2
+        ],
+        count: 2
+      }
+    ]
+  }
+]
